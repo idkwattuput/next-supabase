@@ -14,6 +14,21 @@ export default async function ProtectedPage() {
     return redirect("/sign-in");
   }
 
+  if (user) {
+    let { data: cafes, error } = await supabase
+      .from('Cafe')
+      .select();
+
+    if (error) {
+      console.error("Error fetching Cafe:", error);
+    } else {
+      console.log("Cafe data:", cafes);
+    }
+  } else {
+    console.log("User is not authenticated.");
+  }
+
+
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
       <div className="w-full">
